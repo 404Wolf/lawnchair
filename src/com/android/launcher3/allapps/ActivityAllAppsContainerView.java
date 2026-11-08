@@ -331,7 +331,10 @@ public class ActivityAllAppsContainerView<T extends Context & ActivityContext>
                 0,
                 0 // Bottom left
         };
-        mBottomSheetBackgroundColor = ColorTokens.SurfaceDimColor.resolveColor(getContext());
+        // The tablet/unfolded bottom sheet takes the drawer background (app_drawer_bg_color)
+        // like the full-screen drawer, not a fixed surface colour.
+        mBottomSheetBackgroundColor = ColorUtils.setAlphaComponent(
+                app.lawnchair.util.LawnchairUtilsKt.getAllAppsScrimColor(getContext()), 255);
         updateBackgroundVisibility(mActivityContext.getDeviceProfile());
         mSearchUiManager.initializeSearch(this);
     }

@@ -86,6 +86,15 @@ class SearchResultIconRow(context: Context, attrs: AttributeSet?) :
             title.text = it.title
             tag = it
         }
+        // Results built from a search action (settings, contacts, files...) must show their
+        // title in the row even if the icon's callback did not run for this bind.
+        if (title.text.isNullOrEmpty()) {
+            title.text = target.searchAction?.title ?: icon.text
+        }
+        android.util.Log.d("LcSearchRow", "bind ${target.id} type=${target.layoutType} title='${title.text}' vis=${title.visibility}")
+        title.post {
+            android.util.Log.d("LcSearchRow", "laid out ${target.id} title='${title.text}' w=${title.width} h=${title.height} vis=${title.visibility} rows.w=${(title.parent as? android.view.View)?.width}")
+        }
         val isSuggestion = (target.layoutType == LayoutType.HORIZONTAL_MEDIUM_TEXT || target.layoutType == LayoutType.WIDGET_LIVE) &&
             target.resultType == SearchTargetCompat.RESULT_TYPE_SUGGESTIONS &&
             (target.packageName == WEB_SUGGESTION || target.packageName == HISTORY)
