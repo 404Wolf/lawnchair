@@ -34,8 +34,6 @@ class SearchResultText(context: Context, attrs: AttributeSet?) :
 
     override fun bind(target: SearchTargetCompat, shortcuts: List<SearchTargetCompat>) {
         title.text = target.searchAction?.title
-        android.util.Log.d("LcSearchRow", "header '${title.text}'")
-        title.post { android.util.Log.d("LcSearchRow", "header laid out '${title.text}' w=${title.width} h=${title.height} vis=${title.visibility}") }
         val res = when (title.text) {
             SPACE -> resources.getDimensionPixelSize(R.dimen.space_layout_height)
             SPACE_MINI -> resources.getDimensionPixelSize(R.dimen.space_layout_mini_height)
